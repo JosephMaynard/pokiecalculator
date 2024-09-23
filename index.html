@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>
+      Pokie Calculator - Keep track of all your Winnings! - pokiecalculator.com
+    </title>
+    <meta
+      name="description"
+      content="When you're out having fun, it can be difficult to keep track of all your winnings on the pokie machines, but now you can easily record everything with Pokie Calculator! All of the data is stored on your phone, we do not record any information about your wins or loses."
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/mobile/1.3.0-rc.1/jquery.mobile.structure-1.3.0-rc.1.min.css"
+    />
+    <link rel="stylesheet" href="pokie-calculator-theme.min.css" />
+    <link rel="stylesheet" href="pokiecalculator.css" />
+    <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.3.0-rc.1/jquery.mobile-1.3.0-rc.1.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDg1pCF17YBqKql9EzfD9oNHzbYgHwaG_A&sensor=false"
+    ></script>
+    <script src="pokiecalculator.js"></script>
+  </head>
+  <body>
+    <div data-role="page" id="main" data-theme="a">
+      <div data-theme="a" data-role="header" data-position="fixed"></div>
+      <div data-role="content">
+        <h2>Pokie Calculator</h2>
+        <div id="currentWinningsPanel">
+          <p>Current winnings:</p>
+          <p id="currentWinnings"></p>
+        </div>
+        <div data-role="fieldcontain">
+          <fieldset data-role="controlgroup">
+            <label for="amount"> How much: </label>
+            <input
+              name="amount"
+              id="amount"
+              placeholder="$"
+              value
+              type="number"
+            />
+          </fieldset>
+        </div>
+        <div class="ui-grid-a">
+          <div class="ui-block-a">
+            <a
+              data-role="button"
+              href="#"
+              data-icon="arrow-u"
+              data-iconpos="left"
+              id="won"
+              data-theme="g"
+              >Won</a
+            >
+          </div>
+          <div class="ui-block-b">
+            <a
+              data-role="button"
+              href="#"
+              data-icon="arrow-d"
+              data-iconpos="left"
+              id="lost"
+              data-theme="f"
+              >Lost</a
+            >
+          </div>
+        </div>
+        <br clear="all" />
+        <a data-role="button" href="#historyPage">History</a>
+        <a data-role="button" href="#about">About</a>
+        <a data-role="button" href="#settings">Settings</a>
+        <p id="copyright">
+          &copy;
+          <script>
+            <!--
+            var year = new Date();
+            year = year.getYear();
+            if (year < 1900) year += 1900;
+            document.write(year);
+            //-->
+          </script>
+          <noscript>2013</noscript>
+          <a href="https://josephmaynard.co.uk/" rel="external" target="_blank"
+            >Joseph Maynard</a
+          >
+        </p>
+      </div>
+      <div
+        data-role="popup"
+        id="welcomeScreen"
+        data-overlay-theme="a"
+        data-theme="c"
+        style="max-width: 400px"
+        class="ui-corner-all"
+      >
+        <div data-role="header" data-theme="a" class="ui-corner-top">
+          <h1>Welcome</h1>
+        </div>
+        <div
+          data-role="content"
+          data-theme="d"
+          class="ui-corner-bottom ui-content"
+        >
+          <p>
+            Welcome to Pokie Calculator where you can keep track of all your
+            winnings! Simply enter there amount and hit the win or lost button
+            to keep a running total and history of your winnings. All
+            information is stored on you phone and is not shared with anyone.
+          </p>
+          <h3 class="ui-title">
+            Would you like to track the location of your wins?
+          </h3>
+          <p>
+            You can change this choice at any time on the settings page,
+            location data stay on you phone.
+          </p>
+          <a
+            href="#"
+            data-role="button"
+            data-inline="true"
+            data-rel="back"
+            data-theme="b"
+            id="geolocationYes"
+            >Yes</a
+          >
+          <a
+            href="#"
+            data-role="button"
+            data-inline="true"
+            data-rel="back"
+            data-theme="c"
+            id="geolocationNo"
+            >No</a
+          >
+        </div>
+      </div>
+    </div>
+    <div
+      data-role="page"
+      id="historyPage"
+      data-title="Pokie Calculator History"
+    >
+      <div data-role="content">
+        <h2>History</h2>
+        <div id="history"></div>
+        <a data-role="button" href="#main">Back</a>
+      </div>
+      <div
+        data-role="popup"
+        id="removeHistoryPopup"
+        data-overlay-theme="a"
+        data-theme="c"
+        style="max-width: 400px"
+        class="ui-corner-all"
+      >
+        <div data-role="header" data-theme="a" class="ui-corner-top">
+          <h1>Delete History Item?</h1>
+        </div>
+        <div
+          data-role="content"
+          data-theme="d"
+          class="ui-corner-bottom ui-content"
+        >
+          <h3 class="ui-title">Are you sure you want to delete this item?</h3>
+          <p>This action cannot be undone.</p>
+          <a
+            href="#"
+            data-role="button"
+            data-inline="true"
+            data-rel="back"
+            data-theme="c"
+            id="cancelRemoveHistory"
+            >Cancel</a
+          >
+          <a
+            href="#"
+            data-role="button"
+            data-inline="true"
+            data-rel="back"
+            data-transition="flow"
+            data-theme="b"
+            id="confirmRemoveHistory"
+            >Delete</a
+          >
+        </div>
+      </div>
+    </div>
+    <div data-role="page" id="about" data-title="About Pokie Calculator">
+      <div data-role="content">
+        <h2>About Pokie Calculator</h2>
+        <p>
+          When you're out having fun, it can be difficult to keep track of all
+          your winnings on the pokie machines, but now you can easily record
+          everything with Pokie Calculator!
+        </p>
+        <p>
+          All of the data is stored on your phone, we do not record any
+          information about your wins or loses. This does me that if you lose
+          your phone all the data will be lost too, so try and look after it!
+        </p>
+        <p>
+          If you allow geolocation, you will be able to see on Google Maps where
+          you got each win. The location data is also stored on you phone so we
+          will not see where you've been!
+        </p>
+        <p>
+          Please note that if you delete your cookies, you may lose all of your
+          saved data.
+        </p>
+        <p>
+          We do not in any way encorage gambling and if you find you are winning
+          a lot less than you though you were, we would suggest that maybe you
+          should cut back, or seek help if it becoming a problem.
+        </p>
+        <a data-role="button" href="#main">Back</a>
+      </div>
+    </div>
+    <div data-role="page" id="settings" data-title="Pokie Calculator Settings">
+      <div data-role="content">
+        <h2>Settings</h2>
+        <div class="containing-element">
+          <div id="currentLocation"></div>
+          <label for="geolocation">Track location of wins:</label>
+          <select name="geolocation" id="geolocation" data-role="slider">
+            <option value="off">Off</option>
+            <option value="on">On</option>
+          </select>
+        </div>
+        <a data-role="button" href="#" id="deleteSavedData"
+          >Delete All Saved Data</a
+        >
+        <a data-role="button" href="#main">Back</a>
+      </div>
+      <div
+        data-role="popup"
+        id="deleteSavedDataPopup"
+        data-overlay-theme="a"
+        data-theme="c"
+        style="max-width: 400px"
+        class="ui-corner-all"
+      >
+        <div data-role="header" data-theme="a" class="ui-corner-top">
+          <h1>Delete All Saved Data?</h1>
+        </div>
+        <div
+          data-role="content"
+          data-theme="d"
+          class="ui-corner-bottom ui-content"
+        >
+          <h3 class="ui-title">
+            Are you sure you want to delete all saved data?
+          </h3>
+          <p>This action cannot be undone.</p>
+          <a
+            href="#"
+            data-role="button"
+            data-inline="true"
+            data-rel="back"
+            data-theme="c"
+            id="cancelDeleteSavedData"
+            >Cancel</a
+          >
+          <a
+            href="#"
+            data-role="button"
+            data-inline="true"
+            data-rel="back"
+            data-transition="flow"
+            data-theme="b"
+            id="confirmDeleteSavedData"
+            >Delete</a
+          >
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(["_setAccount", "UA-628498-19"]);
+      _gaq.push(["_trackPageview"]);
+
+      (function () {
+        var ga = document.createElement("script");
+        ga.type = "text/javascript";
+        ga.async = true;
+        ga.src =
+          ("https:" == document.location.protocol
+            ? "https://ssl"
+            : "http://www") + ".google-analytics.com/ga.js";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>
